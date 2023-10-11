@@ -549,6 +549,4 @@ __webpack_require__.d(exports, {
 /******/ 	var __webpack_exports__ = __webpack_require__(252);
 /******/ 	app2 = __webpack_exports__;
 /******/ 	
-/******/ })()
-;
-//# sourceMappingURL=remoteEntry.js.map
+/******/ })();
