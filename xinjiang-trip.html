@@ -1,0 +1,1059 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>北疆 9 日自驾</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --accent: #d4943c;
+    --accent-soft: #f0c97a;
+    --accent-bg: #fef8ee;
+    --bg: #faf6f1;
+    --card: rgba(255,255,255,.72);
+    --card-solid: #fff;
+    --text: #2d2a26;
+    --text-secondary: #5c5650;
+    --text-muted: #8a837b;
+    --border: rgba(0,0,0,.06);
+    --radius: 16px;
+    --shadow: 0 2px 20px rgba(0,0,0,.04);
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .container {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(160deg, #e8b44a 0%, #d4943c 40%, #c07a2e 100%);
+    color: #fff;
+    padding: 60px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -20%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(255,255,255,.12) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -15%;
+    width: 250px;
+    height: 250px;
+    background: radial-gradient(circle, rgba(255,255,255,.08) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+  .hero h1 {
+    font-family: Georgia, "Songti SC", serif;
+    font-size: clamp(28px, 7vw, 36px);
+    font-weight: 700;
+    letter-spacing: 4px;
+    margin-bottom: 12px;
+  }
+  .hero .subtitle {
+    font-size: 15px;
+    opacity: .9;
+    letter-spacing: 2px;
+    font-weight: 300;
+  }
+  .hero .route-flow {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4px 2px;
+    margin-top: 24px;
+    font-size: 12px;
+    opacity: .88;
+    line-height: 2;
+  }
+  .hero .route-flow .stop {
+    padding: 2px 10px;
+    border: 1px solid rgba(255,255,255,.3);
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+  .hero .route-flow .arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 2px;
+    opacity: .5;
+  }
+
+  /* ── Stats Bar ── */
+  .stats-bar {
+    margin: -28px 20px 0;
+    max-width: 600px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    background: var(--card-solid);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+  }
+  @media (min-width: 680px) { .stats-bar { margin: -28px auto 0; } }
+  .stat {
+    padding: 20px 12px;
+    text-align: center;
+    position: relative;
+  }
+  .stat + .stat::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background: var(--border);
+  }
+  .stat-value {
+    font-family: Georgia, "Songti SC", serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* ── Alerts ── */
+  .alerts {
+    margin: 16px 20px 0;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  @media (min-width: 680px) { .alerts { margin: 16px auto 0; } }
+  .alert-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--card-solid);
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    border: 1px solid var(--border);
+  }
+  .alert-icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 1px;
+  }
+
+  /* ── Glance Table ── */
+  .glance {
+    background: var(--card-solid);
+    margin: 24px 20px 0;
+    max-width: 600px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    padding: 24px 0 8px;
+    overflow: hidden;
+  }
+  @media (min-width: 680px) { .glance { margin: 24px auto 0; } }
+  .glance-title {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin: 0 20px 16px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .glance-row {
+    display: grid;
+    grid-template-columns: 54px 1fr auto;
+    align-items: center;
+    padding: 11px 20px;
+    font-size: 13px;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+  }
+  .glance-row + .glance-row { border-top: 1px solid rgba(0,0,0,.04); }
+  .glance-row::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: var(--bar-width, 0%);
+    background: var(--accent-bg);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .glance-row > * { position: relative; z-index: 1; }
+  .glance-day {
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 12px;
+  }
+  .glance-date {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+  .glance-route {
+    color: var(--text);
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .glance-highlight {
+    color: var(--text-secondary);
+    font-size: 11px;
+    font-weight: 400;
+    display: block;
+    margin-top: 1px;
+  }
+  .glance-km {
+    color: var(--text-muted);
+    font-size: 12px;
+    text-align: right;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── Section Headers ── */
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 40px 0 20px;
+  }
+  .section-header::before {
+    content: '';
+    width: 3px;
+    height: 20px;
+    background: var(--accent);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-family: Georgia, "Songti SC", serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  /* ── Day Cards — Timeline ── */
+  .timeline { position: relative; padding-left: 28px; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 24px;
+    bottom: 24px;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--accent-soft), var(--accent), var(--accent-soft));
+    border-radius: 1px;
+  }
+
+  .day-card {
+    background: var(--card);
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+    overflow: hidden;
+    position: relative;
+    transition: box-shadow .3s ease, transform .3s ease;
+  }
+  .day-card:active { transform: scale(.99); }
+
+  .day-dot {
+    position: absolute;
+    left: -28px;
+    top: 22px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 3px solid var(--accent);
+    z-index: 1;
+  }
+  .day-card[data-pace="rush"] .day-dot { border-color: #e07a3c; }
+  .day-card[data-pace="return"] .day-dot { border-color: var(--text-muted); }
+
+  .day-watermark {
+    position: absolute;
+    right: 16px;
+    top: -8px;
+    font-family: Georgia, "Songti SC", serif;
+    font-size: 72px;
+    font-weight: 700;
+    color: rgba(0,0,0,.03);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .day-header {
+    padding: 20px 20px 16px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    position: relative;
+  }
+  .day-header:active { background: rgba(0,0,0,.01); }
+
+  .day-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 6px;
+  }
+  .day-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .day-num {
+    font-family: Georgia, "Songti SC", serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .day-card[data-pace="rush"] .day-num { color: #e07a3c; }
+  .day-card[data-pace="return"] .day-num { color: var(--text-muted); }
+  .day-date {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 400;
+  }
+  .pace-pill {
+    font-size: 11px;
+    padding: 2px 10px;
+    border-radius: 12px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: .5px;
+  }
+  .day-card[data-pace="rush"] .pace-pill { background: #fef0e6; color: #e07a3c; }
+  .day-card[data-pace="return"] .pace-pill { background: #f5f3f0; color: var(--text-muted); }
+
+  .chevron {
+    width: 18px;
+    height: 18px;
+    color: var(--text-muted);
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    flex-shrink: 0;
+  }
+  .day-card.open .chevron { transform: rotate(180deg); }
+
+  .day-route {
+    font-family: Georgia, "Songti SC", serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 8px;
+  }
+
+  .day-highlight {
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  .day-stay {
+    font-size: 12px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 6px;
+  }
+  .day-stay-icon {
+    width: 13px;
+    height: 13px;
+    opacity: .45;
+    flex-shrink: 0;
+  }
+
+  .day-meta {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    color: var(--text-secondary);
+  }
+  .day-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .meta-icon {
+    width: 14px;
+    height: 14px;
+    opacity: .5;
+  }
+
+  .day-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .4s cubic-bezier(.4,0,.2,1);
+  }
+  .day-card.open .day-body { max-height: 1200px; }
+
+  .day-content { padding: 0 20px 20px; }
+  .day-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin-bottom: 16px;
+  }
+
+  .spot-list { list-style: none; }
+  .spot-item {
+    padding: 10px 0;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .spot-item + .spot-item { border-top: 1px solid rgba(0,0,0,.04); }
+  .spot-marker {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    flex-shrink: 0;
+    margin-top: 7px;
+  }
+  .day-card[data-pace="rush"] .spot-marker { background: #f0b88a; }
+  .day-card[data-pace="return"] .spot-marker { background: #d5d0ca; }
+  .spot-text { flex: 1; min-width: 0; }
+  .spot-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.5;
+  }
+  .spot-desc {
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-top: 2px;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 4px;
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: .5px;
+  }
+  .tag-must {
+    background: linear-gradient(135deg, var(--accent-bg), #fdf0dd);
+    color: var(--accent);
+  }
+  .tag-opt {
+    background: #f5f3f0;
+    color: var(--text-muted);
+  }
+  .tag-food {
+    background: #fdf0ec;
+    color: #c4603c;
+  }
+
+  .stay-info {
+    margin-top: 14px;
+    padding: 10px 14px;
+    background: var(--accent-bg);
+    border-radius: 10px;
+    font-size: 13px;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .cost-info {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ── Info Accordion ── */
+  .info-card {
+    background: var(--card-solid);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+    overflow: hidden;
+  }
+  .info-card summary {
+    padding: 18px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text);
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .info-card summary:active { background: rgba(0,0,0,.02); }
+  .info-card summary::-webkit-details-marker { display: none; }
+  .info-card summary::after {
+    content: '';
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid var(--text-muted);
+    border-bottom: 2px solid var(--text-muted);
+    transform: rotate(45deg);
+    transition: transform .3s cubic-bezier(.4,0,.2,1);
+    flex-shrink: 0;
+  }
+  .info-card[open] summary::after { transform: rotate(-135deg); }
+  .info-body {
+    padding: 0 20px 20px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.8;
+  }
+  .info-body h4 {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin: 14px 0 4px;
+    letter-spacing: .5px;
+  }
+  .info-body h4:first-child { margin-top: 0; }
+  .info-body p {
+    margin: 0 0 6px;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center;
+    padding: 48px 20px 64px;
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .footer-line {
+    width: 40px;
+    height: 2px;
+    background: var(--accent-soft);
+    margin: 0 auto 16px;
+    border-radius: 1px;
+  }
+
+  /* ── Desktop ── */
+  @media (min-width: 680px) {
+    .container { padding: 0 24px; }
+    .hero { padding: 72px 32px 80px; }
+    .hero h1 { letter-spacing: 6px; }
+    .day-header { padding: 24px 24px 18px; }
+    .day-content { padding: 0 24px 24px; }
+  }
+
+  /* ── Animations ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .day-card { animation: fadeUp .5s ease both; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <h1>北疆 9 日自驾</h1>
+    <p class="subtitle">8.29 — 9.6 · 顺时针环线</p>
+    <div class="route-flow">
+      <span class="stop">乌鲁木齐</span><span class="arrow">→</span>
+      <span class="stop">喀纳斯</span><span class="arrow">→</span>
+      <span class="stop">禾木</span><span class="arrow">→</span>
+      <span class="stop">赛里木湖</span><span class="arrow">→</span>
+      <span class="stop">唐布拉</span><span class="arrow">→</span>
+      <span class="stop">独库公路</span><span class="arrow">→</span>
+      <span class="stop">巴音布鲁克</span>
+    </div>
+  </div>
+</header>
+
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-value">9</div>
+    <div class="stat-label">天</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">2,670</div>
+    <div class="stat-label">公里</div>
+  </div>
+  <div class="stat">
+    <div class="stat-value">7</div>
+    <div class="stat-label">城市</div>
+  </div>
+</div>
+
+<!-- Key Alerts -->
+<div class="alerts">
+  <div class="alert-item">
+    <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="#d4943c" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <div>新疆使用北京时间，但日照比内地<b>晚约 2 小时</b>。9 月初日出约 <b>7:30</b>，日落约 <b>20:00</b>。当地人作息也晚 2 小时，晚餐一般 20:00 后。</div>
+  </div>
+  <div class="alert-item">
+    <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="#d4943c" stroke-width="2"><path d="M12 2L4 7v6c0 5.5 3.4 10.3 8 12 4.6-1.7 8-6.5 8-12V7l-8-5z"/></svg>
+    <div>独库公路每日 <b>9:00-19:00</b> 放行，夜间封闭。出发前关注「新疆交警」公众号确认开放状态。</div>
+  </div>
+  <div class="alert-item">
+    <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="#d4943c" stroke-width="2"><path d="M9 18l6-6-6-6"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+    <div>喀纳斯、禾木景区<b>禁止私家车进入</b>，须停车换乘区间车。D3-D4 连续两晚离车，<b>提前打包好旅行袋</b>，详见行李方案。</div>
+  </div>
+</div>
+
+<!-- Glance -->
+<div class="glance">
+  <div class="glance-title">全程速览</div>
+  <div id="glance-rows"></div>
+</div>
+
+<div class="container">
+  <div class="section-header"><h2>逐日行程</h2></div>
+  <div class="timeline" id="day-cards"></div>
+
+  <div class="section-header"><h2>实用信息</h2></div>
+
+  <details class="info-card">
+    <summary>租车与驾驶</summary>
+    <div class="info-body">
+      <h4>租车建议</h4>
+      <p>推荐 SUV 或越野车，独库公路和部分景区路段路况一般。</p>
+      <p>确认车辆有 ETC，新疆高速 ETC 通行更快。</p>
+      <p>取还车均在乌鲁木齐天山机场内，行李无需额外搬运。提前拍车辆外观照片留证。</p>
+      <h4>驾驶注意</h4>
+      <p><b>限速严格</b>：新疆公路区间测速非常多，G216/G217 限速 80-100km/h，独库公路限速 30-40km/h，切勿超速。</p>
+      <p><b>安检频繁</b>：进出城市、上下高速、加油站均需安检刷身份证，每次耗时 5-15 分钟，行程预估要留余量。</p>
+      <p>加油需驾驶员本人持身份证下车登记，乘客不得下车。</p>
+      <p>新疆路况整体良好，但注意避让牛羊过路，尤其草原路段。</p>
+    </div>
+  </details>
+
+  <details class="info-card" open>
+    <summary>行李管理方案</summary>
+    <div class="info-body">
+      <h4>打包策略：一大一小一随身</h4>
+      <p><b>大行李箱</b>：放后备箱全程不动，装非每日必需的衣物、备用鞋等。</p>
+      <p><b>软质旅行袋/双肩包（≤20L）</b>：景区过夜专用，装 2 天换洗衣物和洗漱用品，能背上区间车。</p>
+      <p><b>随身小包</b>：身份证、驾照、手机、充电宝、现金、防晒霜、水——每天随身不离。</p>
+      <h4>D3-D4 重点：连续两晚离车</h4>
+      <p>这是全程唯一需要带行李上区间车过夜的场景，提前打包好旅行袋：</p>
+      <p><b>D3</b>：车停<b>贾登峪停车场</b>，背旅行袋上区间车 → 宿喀纳斯新村（1 晚）</p>
+      <p><b>D4 上午</b>：区间车回贾登峪取车，开往禾木 → 车停<b>禾木山庄停车场</b>，背旅行袋进村 → 宿禾木（1 晚）</p>
+      <p><b>D5 上午</b>：区间车出村回停车场，取车南下</p>
+      <p style="margin-top:8px"><b>旅行袋清单（2 晚）：</b></p>
+      <p>· 2 套换洗内衣袜 + 1 套外穿衣物</p>
+      <p>· 抓绒衣 + 防风外套（喀纳斯/禾木早晚 5-10°C）</p>
+      <p>· 洗漱用品、毛巾（景区民宿不一定提供）</p>
+      <p>· 充电器、充电宝（禾木信号弱但需导航和拍照）</p>
+      <p>· 相机和必要镜头（如有）</p>
+      <h4>车内行李安全</h4>
+      <p>车在贾登峪过夜（D3）和禾木山庄过夜（D4）时：</p>
+      <p>· <b>贵重物品全部随身</b>（电脑、现金、证件）</p>
+      <p>· 剩余行李锁在后备箱，用遮物帘盖住</p>
+      <p>· 车内可见位置不留任何物品，降低被砸风险</p>
+      <p>· 景区停车场有管理员，但无监控保障</p>
+      <h4>后座「当日包」</h4>
+      <p>后座常备一个袋子快速取用：当天外套、围巾、墨镜、零食、水、湿巾。新疆昼夜温差 15-20°C，保暖层要能随手拿到，不必每次开后备箱翻找。</p>
+      <h4>机场取还车衔接</h4>
+      <p><b>D1 取车</b>：航站楼取行李 → 步行至机场内租车柜台办手续 → 行李直接装车出发，无需搬运寄存。</p>
+      <p><b>D9 还车</b>：开到机场还车点 → 卸行李 → 办退车手续约 30 分钟 → 拖行李步行至航站楼值机。全程在机场内完成，预留 40 分钟处理还车。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>新疆吃饭须知</summary>
+    <div class="info-body">
+      <h4>用餐时间</h4>
+      <p>新疆用餐比内地晚约 2 小时：午餐 13:00-14:00，晚餐 20:00-21:00。别按内地节奏找饭馆，12 点去可能还没开门。</p>
+      <h4>分量</h4>
+      <p>新疆菜分量极大——大盘鸡、手抓饭等 2-3 人吃一份往往够，先少点再加，别浪费。</p>
+      <h4>赶路日备粮</h4>
+      <p>馕是新疆最好的路粮，干馕可存放数天不坏，配酸奶或奶茶就是一顿饭。赶路日（D2、D5、D9）建议前一晚买好馕和水果。</p>
+      <h4>景区内餐饮</h4>
+      <p>喀纳斯新村、禾木村、巴音布鲁克镇的餐饮价格约为城镇的 2-3 倍，且选择有限。<b>贾登峪</b>和<b>尼勒克</b>是进入景区前最后的平价餐饮补给点，尽量吃饱再进。</p>
+      <h4>特色饮品</h4>
+      <p>卡瓦斯（蜂蜜发酵饮料）、格瓦斯（面包发酵饮料）、咸奶茶、马奶子（微酸微酒精）——都值得尝试。布尔津的格瓦斯和伊犁的老酸奶尤其正宗。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>加油与补给</summary>
+    <div class="info-body">
+      <h4>加油站分布</h4>
+      <p>G216（乌鲁木齐→布尔津）沿途每 80-120km 有中石油加油站，不必焦虑。</p>
+      <p>喀纳斯景区内贾登峪有加油站，<b>禾木无加油站</b>——进禾木前加满。</p>
+      <p>唐布拉百里画廊沿途加油点少，<b>尼勒克县城务必加满</b>。</p>
+      <p>独库公路中段（乔尔玛→巴音布鲁克）<b>约 130km 无加油站</b>。</p>
+      <h4>补给建议</h4>
+      <p>布尔津和伊宁是两个大型补给节点，可购买零食、药品等。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>门票费用参考</summary>
+    <div class="info-body">
+      <p>五彩滩：50 元</p>
+      <p>喀纳斯景区（含区间车）：185 元 + 区间车 70 元</p>
+      <p>禾木景区（含区间车）：50 元 + 区间车 52 元</p>
+      <p>观鱼台：额外 30 元往返区间车</p>
+      <p>赛里木湖：门票 70 元；自驾进入另付 150 元/车（推荐，自由度高）；或坐观光车 75 元</p>
+      <p>巴音布鲁克（含区间车）：48 元 + 区间车 75 元</p>
+      <p>唐布拉百里画廊：免费</p>
+      <p>新疆博物馆：免费（需预约）</p>
+      <p style="margin-top:8px;color:var(--text-muted);font-size:12px;">* 价格可能调整，以景区当日售价为准</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>天气与穿衣</summary>
+    <div class="info-body">
+      <h4>9 月初气温参考</h4>
+      <p>乌鲁木齐：15-28°C，体感舒适。</p>
+      <p>喀纳斯 / 禾木：5-18°C，早晚冷，需抓绒或薄羽绒。</p>
+      <p>赛里木湖：8-20°C，湖边风大，带防风外套。</p>
+      <p>巴音布鲁克：3-16°C，海拔 2,500m，九曲十八弯日落等待时会很冷。</p>
+      <p>独库公路达坂：可能接近 0°C，备厚外套。</p>
+      <h4>穿衣策略</h4>
+      <p>洋葱穿法：速干内层 + 抓绒中层 + 防风防水外层。带一条薄围巾。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>手机信号</summary>
+    <div class="info-body">
+      <p>布尔津→喀纳斯部分路段信号弱，景区内有基站，基本可用。</p>
+      <p>禾木村内信号较弱，4G 时有时无。</p>
+      <p>唐布拉百里画廊中段有 20-30km 无信号区间。</p>
+      <p>独库公路中段达坂附近信号极弱或无信号。</p>
+      <p><b>建议提前下载离线地图</b>（高德/百度均支持离线包）。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>证件与通行</summary>
+    <div class="info-body">
+      <h4>身份证</h4>
+      <p>新疆各处安检频繁，身份证随身携带。加油站刷身份证才能加油。</p>
+      <h4>边防证</h4>
+      <p>喀纳斯 / 禾木区域 2023 年起已取消边防证要求，身份证即可。但政策可能变化，出发前再确认。</p>
+      <h4>独库公路</h4>
+      <p>通常 6 月-10 月开放，具体日期每年不同，遇恶劣天气临时关闭。</p>
+      <p>通行时间限制：一般 9:00-19:00 放行，夜间封闭。</p>
+    </div>
+  </details>
+
+  <div class="section-header"><h2>路线设计说明</h2></div>
+
+  <details class="info-card">
+    <summary>为什么选唐布拉而非那拉提？</summary>
+    <div class="info-body">
+      <p>表面上是「哪个草原更好」，实质是路线衔接问题。唐布拉经尼勒克 → 乔尔玛，自然接入独库公路中段；那拉提走 G218，无法经过独库。</p>
+      <p>此外，那拉提 9 月草已偏黄、景区内禁止自驾、门票 235 元；唐布拉百里画廊免费、游客少、自驾本身就是体验。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>赛里木湖只停 2.5 小时够吗？</summary>
+    <div class="info-body">
+      <p>够。赛里木湖的核心冲击是「蓝水 + 雪山」的视觉震撼，环半湖停 3-4 个观景点即可获得完整体验。全天多出的 4-5 小时看的还是同一片湖，边际收益有限。</p>
+      <p>省下的时间保证了喀纳斯的完整体验——神仙湾晨雾、观鱼台登顶、三湾徒步，这些内容压缩会丢失不可替代的体验。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>为什么不去可可托海？</summary>
+    <div class="info-body">
+      <p>可可托海在北疆东北角（富蕴县），绕行需多走 400km 且多花一整天。额尔齐斯大峡谷值得看，但 9 天行程里代价过高。适合单独安排 2-3 天的东疆行程。</p>
+    </div>
+  </details>
+
+  <details class="info-card">
+    <summary>喀纳斯值得绕那么远去吗？</summary>
+    <div class="info-body">
+      <p>值得。9 月初的禾木白桦秋色是季节限定——每年就两三周窗口。赛里木湖、唐布拉 6-9 月都能去，禾木秋色只有 9 月。喀纳斯 + 禾木是北疆第一名片，多跑 1000km 换一个不可替代的体验。</p>
+    </div>
+  </details>
+
+  <div class="footer">
+    <div class="footer-line"></div>
+    北疆 9 日自驾路线规划
+  </div>
+</div>
+
+<script>
+const DATES = ['8.29 周五','8.30 周六','8.31 周日','9.1 周一','9.2 周二','9.3 周三','9.4 周四','9.5 周五','9.6 周六'];
+
+const days = [
+  {
+    day: 'D1', num: '01', pace: 'enjoy', paceLabel: '休整', km: 0, drive: '',
+    route: '乌鲁木齐',
+    highlight: '大巴扎 · 新疆博物馆 · 入疆第一餐',
+    spots: [
+      ['12:55 到达乌鲁木齐机场', '机场内租车柜台取车，办手续约 1 小时；行李直接装车，建议租 SUV，确认 ETC 和油箱已满'],
+      ['14:00 出发去市区', '机场到天山区约 30 分钟'],
+      ['14:30 午餐：过油肉拌面', '到市区先吃一顿——过油肉拌面是入疆第一餐的经典选择，再来一碗羊杂汤', 'food'],
+      ['15:30 新疆博物馆', '楼兰美女干尸、丝路文物，免费需预约，约 2 小时（周一闭馆）'],
+      ['17:30 大巴扎', '伊斯兰建筑本身值得看，购物量力而行'],
+      ['20:00 晚餐', '第一晚要丰盛：大盘鸡 + 烤包子 + 手抓饭，配乌苏啤酒或卡瓦斯（蜂蜜发酵饮料）', 'food']
+    ],
+    stay: '宿乌鲁木齐（天山区，近大巴扎/红山公园）',
+    cost: null
+  },
+  {
+    day: 'D2', num: '02', pace: 'rush', paceLabel: '赶路', km: 620, drive: '约 9-10h',
+    route: '乌鲁木齐 → 布尔津',
+    highlight: '五彩滩日落 · 河堤夜市烤鱼',
+    spots: [
+      ['7:00 出发，G216 一路向北', '出发前在酒店吃早餐，再买几个馕和酸奶带上——赶路日午餐不好找'],
+      ['沿途安检与景观', '多处安检站需身份证；景观从戈壁渐变为草原、森林'],
+      ['12:00-13:00 午餐', '路边服务区简餐，或车上吃馕+熟食+水果解决', 'food'],
+      ['16:00-17:00 到达布尔津', '先入住放行李，稍作休息'],
+      ['19:00 前到五彩滩占位', '雅丹地貌 + 额尔齐斯河，20:00 日落最佳光影', 'highlight'],
+      ['21:00 布尔津河堤夜市', '必点烤冷水狗鱼（额尔齐斯河特产），配格瓦斯（布尔津产的最正宗）', 'food']
+    ],
+    stay: '宿布尔津县城（河堤夜市步行可达）',
+    cost: '五彩滩 50 元'
+  },
+  {
+    day: 'D3', num: '03', pace: 'enjoy', paceLabel: '享受', km: 160, drive: '约 3h',
+    route: '布尔津 → 喀纳斯',
+    highlight: '观鱼台 · 三湾徒步',
+    spots: [
+      ['9:00 出发前往喀纳斯', '布尔津→贾登峪约 130km，3 小时'],
+      ['12:00 到贾登峪', '私家车停贾登峪停车场，带上旅行袋上区间车'],
+      ['12:30 贾登峪午餐', '景区外最后的正式餐饮点，拌面或手抓饭先吃饱——景区内餐饮贵且选择少', 'food'],
+      ['下午 三湾徒步', '区间车依次经过卧龙湾→月亮湾→神仙湾，可中途下车沿栈道徒步，约 2-3 小时'],
+      ['观鱼台', '到新村换乘中心后，另坐区间车前往，1068 级台阶登顶，俯瞰喀纳斯湖全貌', 'highlight'],
+      ['游船', '湖上近距离感受喀纳斯，约 1 小时', 'optional'],
+      ['晚餐在新村', '哈萨克/图瓦族风味：手抓肉、咸奶茶、包尔萨克（油炸面点），价格偏高但风味独特', 'food']
+    ],
+    stay: '宿喀纳斯新村（景区内换乘中心旁，步行可达三湾，方便次日晨雾）',
+    cost: '喀纳斯 185+70 元'
+  },
+  {
+    day: 'D4', num: '04', pace: 'enjoy', paceLabel: '享受', km: 60, drive: '约 1.5h',
+    route: '喀纳斯 → 禾木',
+    highlight: '神仙湾晨雾 6:30 · 白桦林秋色',
+    spots: [
+      ['6:30 步行前往神仙湾', '日出前后 7:00-8:30 是晨雾最佳观赏时间，季节限定', 'highlight'],
+      ['10:00 区间车回贾登峪取车', '11:00 驱车前往禾木，约 60km / 1.5h'],
+      ['12:30 到禾木景区停车场', '车停禾木山庄，换区间车进村入住'],
+      ['13:00 午餐', '禾木村内餐厅不少，大盘鸡和烤羊排是主流，分量很足', 'food'],
+      ['禾木观景台', '俯瞰整个禾木村的木屋与白桦林'],
+      ['白桦林漫步', '9 月初白桦开始转黄，金色走廊'],
+      ['禾木河', '河边发呆、日落'],
+      ['图瓦人村落', '中国仅存的三个图瓦人村落之一'],
+      ['晚餐', '在木屋院子里吃：风干牛肉、锅茶（奶茶+酥油+包尔萨克），配禾木的星空', 'food']
+    ],
+    stay: '宿禾木村（村内木屋民宿，近禾木桥方便次日去观景台看日出）',
+    cost: '禾木 50+52 元'
+  },
+  {
+    day: 'D5', num: '05', pace: 'rush', paceLabel: '赶路', km: 580, drive: '约 9-10h',
+    route: '禾木 → 奎屯',
+    highlight: '禾木日出（可选）· 魔鬼城（顺路可选）',
+    spots: [
+      ['7:30 禾木日出', '观景台看晨光中的炊烟木屋', 'optional'],
+      ['8:30 区间车出村，9:00 取车出发', '经布尔津方向南下 G217，沿途安检注意预留时间'],
+      ['12:00-13:00 午餐', '北屯或福海县城路边餐馆，赶路日以吃饱为主', 'food'],
+      ['乌尔禾魔鬼城', '顺路可选，停留 1.5h 看雅丹地貌', 'optional'],
+      ['18:00-19:00 到达奎屯', null],
+      ['晚餐', '赶了一天路犒劳自己：清炖羊肉或手抓肉，配皮带面（宽如皮带的拉面）', 'food']
+    ],
+    stay: '宿奎屯市区（团结路/乌鲁木齐路商圈，酒店选择多）',
+    cost: null
+  },
+  {
+    day: 'D6', num: '06', pace: 'slow', paceLabel: '中等', km: 400, drive: '驾车 5.5h + 游览',
+    route: '奎屯 → 赛里木湖 → 伊宁',
+    highlight: '赛里木湖 · 果子沟大桥 · 喀赞其老城',
+    spots: [
+      ['8:00 出发，G30 连霍高速西行', '早餐在奎屯吃好，带些馕和水果上路——赛里木湖边餐饮选择少'],
+      ['11:00 赛里木湖', '「大西洋最后一滴眼泪」，蓝水雪山，自驾环半湖约 2.5h', 'highlight'],
+      ['13:30 离开，经果子沟大桥', '中国最美高速公路桥之一，赛里木湖→伊宁约 150km / 2h'],
+      ['16:00 到达伊宁', null],
+      ['16:30 伊宁觅食', '伊犁是全疆美食高地——面肺子+米肠子（伊犁独有）、薄皮包子、手抓饭、烤肉串，汉人街/解放路一带选择丰富', 'food'],
+      ['傍晚 喀赞其民俗旅游区', '伊宁老城，蓝色建筑、花砖小巷、维吾尔族生活气息', 'highlight'],
+      ['喀赞其里吃甜品', '逛完老城来一份伊犁老酸奶或当地冰淇淋收尾', 'food']
+    ],
+    stay: '宿伊宁市区（解放路/喀赞其附近，吃饭逛街方便）',
+    cost: '赛里木湖 70 元 + 自驾 150 元/车'
+  },
+  {
+    day: 'D7', num: '07', pace: 'slow', paceLabel: '慢驾', km: 200, drive: '全天',
+    route: '伊宁 → 唐布拉百里画廊',
+    highlight: '百里画廊全天自驾 · 免费',
+    spots: [
+      ['9:00 出发', '伊宁→尼勒克约 80km / 1.5h'],
+      ['10:30 尼勒克县城', '加油务必加满——此后至巴音布鲁克约 330km 加油困难；顺便在县城吃午餐，之后百里画廊沿途几乎没有餐馆', 'food'],
+      ['唐布拉百里画廊', '雪山、草原、河谷、瀑布交替出现，自驾本身就是体验', 'highlight'],
+      ['全天慢驾，随停随拍', '免费、游客少、9 月秋色正好'],
+      ['路遇牧民买酸奶', '沿途偶有牧民卖现挤酸奶和奶疙瘩，遇到值得停车尝试', 'food'],
+      ['17:00-18:00 到达乔尔玛', '晚餐在住处解决，乔尔玛以简易餐馆为主，家常拌面、大盘鸡，别期望太高']
+    ],
+    stay: '宿乔尔玛（独库公路中段起点，住宿条件有限，以简易旅馆为主）',
+    cost: null
+  },
+  {
+    day: 'D8', num: '08', pace: 'slow', paceLabel: '从容', km: 200, drive: '约 4h',
+    route: '唐布拉 → 独库公路 → 巴音布鲁克',
+    highlight: '独库公路中段 · 九曲十八弯日落 20:00',
+    spots: [
+      ['9:00 独库公路放行后出发', '乔尔玛管制站等候放行，不能提前出发；出发前简单吃早餐'],
+      ['独库公路中段', '悬崖、雪山、高山草甸交替，弯道多注意车速，全程限速 30-40km/h'],
+      ['13:00 到达巴音布鲁克镇', '乔尔玛→巴音布鲁克约 130km / 4h，海拔 2,500m，部分人可能轻微高反'],
+      ['午餐：手把肉', '蒙古族风味——白水煮羊排蘸盐吃，配一碗滚烫的酥油奶茶，高原上吃热乎的最舒服', 'food'],
+      ['下午休息，适应海拔', null],
+      ['17:30 出发去九曲十八弯景区', '镇上到观景台需坐区间车约 20km，18:30 前到达占位'],
+      ['20:00 九曲十八弯日落', '开都河蜿蜒于草原，运气好可见 9 个太阳倒影', 'highlight'],
+      ['21:00 返回镇上晚餐', '日落后气温骤降至 5°C 以下，回镇上来碗热汤面或炖菜暖身', 'food']
+    ],
+    stay: '宿巴音布鲁克镇（景区门口，海拔 2,500m 注意保暖）',
+    cost: '巴音布鲁克 48+75 元'
+  },
+  {
+    day: 'D9', num: '09', pace: 'return', paceLabel: '回程', km: 450, drive: '约 7-8h',
+    route: '巴音布鲁克 → 乌鲁木齐',
+    highlight: 'G218 回程 · 18:40 航班',
+    spots: [
+      ['6:30 早餐', '馕+奶茶+鸡蛋，简单吃饱', 'food'],
+      ['7:00 出发，G218 南下', '巴音布鲁克→巩乃斯段约 90km 山路弯道多，限速低'],
+      ['经和静转高速', '巩乃斯→和静→托克逊→乌鲁木齐，后半程高速路况好'],
+      ['12:00-13:00 午餐', '和静县城吃拌面或在高速服务区快餐解决，别耽误赶路', 'food'],
+      ['14:00-15:00 抵达乌鲁木齐', '预留 1 小时缓冲应对堵车或安检'],
+      ['还车', '机场内还车点，办退车手续约 30 分钟，注意验车时拍照留证'],
+      ['16:40 前到机场', '18:40 航班起飞，提前 2 小时值机安检']
+    ],
+    stay: '',
+    cost: null
+  }
+];
+
+const maxKm = 620;
+
+// Glance table with rhythm bars
+const glanceEl = document.getElementById('glance-rows');
+days.forEach((d, i) => {
+  const barPct = d.km === 0 ? 0 : (d.km / maxKm * 100);
+  const row = document.createElement('div');
+  row.className = 'glance-row';
+  row.style.setProperty('--bar-width', barPct + '%');
+  row.innerHTML = `
+    <div>
+      <div class="glance-day">${d.day}</div>
+      <div class="glance-date">${DATES[i].split(' ')[0]}</div>
+    </div>
+    <div class="glance-route">${d.route}<span class="glance-highlight">${d.highlight}</span></div>
+    <div class="glance-km">${d.km > 0 ? d.km + 'km' : '—'}</div>
+  `;
+  glanceEl.appendChild(row);
+});
+
+// Day cards
+const cardsEl = document.getElementById('day-cards');
+days.forEach((d, i) => {
+  const card = document.createElement('div');
+  card.className = 'day-card';
+  card.dataset.pace = d.pace;
+  card.style.animationDelay = `${i * .06}s`;
+
+  const spotsHTML = d.spots.map(s => {
+    const tag = s[2] === 'highlight' ? '<span class="tag tag-must">必去</span>'
+              : s[2] === 'optional' ? '<span class="tag tag-opt">可选</span>'
+              : s[2] === 'food' ? '<span class="tag tag-food">美食</span>' : '';
+    const desc = s[1] ? `<div class="spot-desc">${s[1]}</div>` : '';
+    return `<li class="spot-item">
+      <div class="spot-marker"></div>
+      <div class="spot-text">
+        <div class="spot-name">${s[0]}${tag}</div>
+        ${desc}
+      </div>
+    </li>`;
+  }).join('');
+
+  const metaParts = [];
+  if (d.km > 0) metaParts.push(`<span><svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>${d.km} km</span>`);
+  if (d.drive) metaParts.push(`<span><svg class="meta-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>${d.drive}</span>`);
+
+  card.innerHTML = `
+    <div class="day-dot"></div>
+    <div class="day-watermark">${d.num}</div>
+    <div class="day-header" onclick="this.parentElement.classList.toggle('open')">
+      <div class="day-top-row">
+        <div class="day-label">
+          <span class="day-num">${d.day}</span>
+          <span class="day-date">${DATES[i]}</span>
+          <span class="pace-pill">${d.paceLabel}</span>
+        </div>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </div>
+      <div class="day-route">${d.route}</div>
+      <div class="day-highlight">${d.highlight}</div>
+      ${d.stay ? `<div class="day-stay"><svg class="day-stay-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M3 7v14M21 7v14M6 11h12v3H6z M8 7V4h8v3"/></svg>${d.stay}</div>` : ''}
+      ${metaParts.length ? `<div class="day-meta">${metaParts.join('')}</div>` : ''}
+    </div>
+    <div class="day-body">
+      <div class="day-content">
+        <div class="day-divider"></div>
+        <ul class="spot-list">${spotsHTML}</ul>
+        ${d.cost ? `<div class="cost-info"><span style="font-weight:600;font-size:14px">¥</span>${d.cost}</div>` : ''}
+      </div>
+    </div>
+  `;
+  cardsEl.appendChild(card);
+});
+</script>
+</body>
+</html>
